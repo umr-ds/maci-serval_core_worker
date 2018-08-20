@@ -1,4 +1,4 @@
-FROM maciresearch/core_worker
+FROM maciresearch/core_worker-gui
 
 ### Install serval requirements
 RUN apt-get update \
