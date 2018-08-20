@@ -20,13 +20,13 @@ class ServalService(CoreService):
     _dirs = ()
     # generated files (without a full path this file goes in the node's dir,
     #  e.g. /tmp/pycore.12345/n1.conf/)
-    _configs = ('serval.conf', 'servald', )
+    _configs = ('serval.conf', )
     # this controls the starting order vs other enabled services
     _startindex = 50
     # list of startup commands, also may be generated during startup
-    _startup = ('bash -c "nohup sh servald start foreground > serval_run.log &"', )
+    _startup = ('bash -c "nohup servald start foreground > serval_run.log 2>&1 &"', )
     # list of shutdown commands
-    _shutdown = ('bash -c "sh servald stop"', )
+    _shutdown = ('servald stop', )
 
     @classmethod
     def generateconfig(cls, node, filename, services):
@@ -40,12 +40,6 @@ api.restful.users.pum.password=pum123
 debug.rhizome=true
 '''.format(node.name)
 
-        if filename == 'servald':
-            return '''#!/usr/bin/env bash
-export SERVALINSTANCE_PATH=$(dirname $(readlink -f $0))
-
-exec servald $@
-'''
 
 def load_services():
     ServiceManager.add(ServalService)
