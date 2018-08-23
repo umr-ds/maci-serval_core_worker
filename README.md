@@ -50,3 +50,9 @@ This worker is available with a gui (based on `maciresearch/core_worker-gui`) to
 docker build -t umrds/serval_core_worker .
 docker build -t umrds/serval_core_worker-gui -f Dockerfile.gui .
 ``` 
+
+### Push images
+```
+docker push umrds/serval_core_worker
+docker push umrds/serval_core_worker-gui
+```
