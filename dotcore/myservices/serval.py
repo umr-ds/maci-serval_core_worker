@@ -37,6 +37,7 @@ class ServalService(CoreService):
             return '''interfaces.0.match=*
 server.motd="{}"
 api.restful.users.pum.password=pum123
+api.restful.users.pyserval.password=pyserval
 debug.rhizome=true
 '''.format(node.name)
 
