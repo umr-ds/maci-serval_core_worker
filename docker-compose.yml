@@ -1,0 +1,15 @@
+version: "3"
+services: 
+    core-gui:
+        image: umrds/serval_core_worker-gui
+        build: .
+        volumes:
+            - /lib/modules:/lib/modules
+            - ./dotcore:/root/.core
+        tty: true
+        privileged: true
+        cap_add:
+            - NET_ADMIN
+        environment:
+          - CORE_PARAMS=
+          - DISPLAY
