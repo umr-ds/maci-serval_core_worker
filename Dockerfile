@@ -1,6 +1,6 @@
-FROM maciresearch/core_worker
+### Build serval in seperate container
+FROM maciresearch/core_worker as builder
 
-### Install serval requirements
 RUN apt-get update \
     && apt-get install -y \
     build-essential \
@@ -13,26 +13,32 @@ RUN apt-get update \
     jq \
     curl \
     git \
-    python-pip \
-    python3-pip \
-    && rm -rf /var/lib/apt/lists/*
-    
-### Build and install serval 
-RUN git clone https://github.com/servalproject/serval-dna.git /serval-dna \
-    && cd /serval-dna \
-    && autoreconf -f -i -I m4 \
-    && ./configure \
-    && make -j 8 servald \
-    && make install \
-    && rm -rf /serval-dna
+    && apt-get clean
+
+RUN git clone https://github.com/servalproject/serval-dna.git /serval-dna
+WORKDIR /serval-dna
+RUN autoreconf -f -i -I m4
+RUN ./configure
+RUN make -j 8 servald
+
+
+### Setup core worker container
+FROM maciresearch/core_worker
+COPY --from=builder /serval-dna/servald  /usr/local/sbin/servald
 
 ### Install pyserval for python 2 and 3
+RUN apt-get update \
+    && apt-get install -y \
+    python-pip \
+    python3-pip \
+    && apt-get clean
 RUN python -m pip install https://github.com/umr-ds/pyserval/archive/master.zip \
-    && python3 -m pip install https://github.com/umr-ds/pyserval/archive/master.zip
+    && python3 -m pip install https://github.com/umr-ds/pyserval/archive/master.zip \
+    && rm -rf /root/.cache/pip/*
 
 ### install core-serval integration
 COPY dotcore /root/.core/
 ENV BASH_ENV /root/.serval
 RUN echo "custom_services_dir = /root/.core/myservices" >> /etc/core/core.conf \
-    && echo "export SERVALINSTANCE_PATH=\$SESSION_DIR/`hostname`.conf" >> /root/.serval \
-    && echo "export SERVALINSTANCE_PATH=\$SESSION_DIR/`hostname`.conf" >> /root/.bashrc
+    && echo "export SERVALINSTANCE_PATH=\$PWD" >> /root/.serval \
+    && echo "export SERVALINSTANCE_PATH=\$PWD" >> /root/.bashrc

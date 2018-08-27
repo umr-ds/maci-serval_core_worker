@@ -2,7 +2,9 @@ version: "3"
 services: 
     core-gui:
         image: umrds/serval_core_worker-gui
-        build: .
+        build:
+            context: .
+            dockerfile: Dockerfile.gui
         volumes:
             - /lib/modules:/lib/modules
             - ./dotcore:/root/.core
