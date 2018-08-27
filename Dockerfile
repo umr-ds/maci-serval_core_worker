@@ -34,5 +34,5 @@ RUN python -m pip install https://github.com/umr-ds/pyserval/archive/master.zip 
 COPY dotcore /root/.core/
 ENV BASH_ENV /root/.serval
 RUN echo "custom_services_dir = /root/.core/myservices" >> /etc/core/core.conf \
-    && echo "export SERVALINSTANCE_PATH=\$PWD" >> /root/.serval \
-    && echo "export SERVALINSTANCE_PATH=\$PWD" >> /root/.bashrc
+    && echo "export SERVALINSTANCE_PATH=\$SESSION_DIR/`hostname`.conf" >> /root/.serval \
+    && echo "export SERVALINSTANCE_PATH=\$SESSION_DIR/`hostname`.conf" >> /root/.bashrc
