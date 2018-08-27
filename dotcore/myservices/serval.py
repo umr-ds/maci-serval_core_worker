@@ -24,7 +24,7 @@ class ServalService(CoreService):
     # this controls the starting order vs other enabled services
     _startindex = 50
     # list of startup commands, also may be generated during startup
-    _startup = ('bash -c "servald keyring add | grep sid | cut -d: -f2 > serval.sid"', 'bash -c "nohup servald start foreground > serval_run.log 2>&1 &"', )
+    _startup = ('bash -c "servald keyring add | grep sid | cut -d: -f2 > serval.sid; nohup servald start foreground > serval_run.log 2>&1 &"', )
     # list of shutdown commands
     _shutdown = ('servald stop', )
 
