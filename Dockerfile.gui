@@ -1,5 +1,5 @@
 ### Build serval in seperate container
-FROM maciresearch/core_worker-gui as builder
+FROM maciresearch/core_worker-gui:0.1 as builder
 
 RUN apt-get update \
     && apt-get install -y \
@@ -23,7 +23,7 @@ RUN make -j 8 servald
 
 
 ### Setup core worker container
-FROM maciresearch/core_worker-gui
+FROM maciresearch/core_worker-gui:0.1
 COPY --from=builder /serval-dna/servald  /usr/local/sbin/servald
 
 ### Install pyserval for python 2 and 3
