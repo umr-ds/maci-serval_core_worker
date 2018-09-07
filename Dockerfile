@@ -34,6 +34,8 @@ RUN apt-get update \
     && apt-get clean
 RUN python -m pip install https://github.com/umr-ds/pyserval/archive/master.zip \
     && python3 -m pip install https://github.com/umr-ds/pyserval/archive/master.zip \
+    && python -m pip install pynacl \
+    && python3 -m pip install pynacl \
     && rm -rf /root/.cache/pip/*
 
 ### install core-serval integration
