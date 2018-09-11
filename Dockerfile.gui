@@ -19,9 +19,9 @@ RUN apt-get update \
 
 RUN git clone https://github.com/servalproject/serval-dna.git /serval-dna
 WORKDIR /serval-dna
-ENV CFLAGS -Wno-error=deprecated-declarations
+ENV CFLAGS -Wno-error=deprecated-declarations -O1
 ENV CC gcc-5
-RUN git checkout batphone-release-0.92
+RUN git checkout batphone-release-0.93
 RUN autoreconf -f -i -I m4
 RUN ./configure
 RUN make -j 8 servald
