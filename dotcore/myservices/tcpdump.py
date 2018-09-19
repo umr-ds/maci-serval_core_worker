@@ -1,8 +1,3 @@
-''' Tcpdump service
-'''
-
-import os
-
 from core.service import CoreService
 from core.service import ServiceManager
 
@@ -22,12 +17,19 @@ class TcpdumpService(CoreService):
     _startindex = 50
     # list of startup commands, also may be generated during startup
     _startup = ('''bash -c "
-for ifpath in /sys/class/net/eth*; do 
-    export iface=`basename $ifpath`
-    nohup tcpdump -n -e -s 200 -i $iface -w $iface.pcap &> $iface.log & 
-done"''', )
+        for ifpath in /sys/class/net/eth*; do
+            export iface=`basename $ifpath`
+            nohup tcpdump -n -e -s 200 -i $iface -w $iface.pcap &> $iface.log &
+            echo $! >> tcpdump.pids
+        done
+        "''', )
     # list of shutdown commands
-    _shutdown = ()
+    _shutdown = ('''bash -c "
+        for pid in `cat tcpdump.pids`; do
+            kill $pid
+        done
+        rm tcpdump.pids
+        "''', )
 
 def load_services():
     ServiceManager.add(TcpdumpService)

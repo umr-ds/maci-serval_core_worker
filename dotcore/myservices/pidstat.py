@@ -1,5 +1,3 @@
-import os
-
 from core.service import CoreService
 from core.service import ServiceManager
 
@@ -18,9 +16,15 @@ class PidstatService(CoreService):
     # this controls the starting order vs other enabled services
     _startindex = 50
     # list of startup commands, also may be generated during startup
-    _startup = ('bash -c "nohup pidstat -drush -p ALL 1 > pidstat 2> pidstat.log" &', )
+    _startup = ('''bash -c "
+        nohup pidstat -drush -p ALL 1 > pidstat 2> pidstat.log &
+        echo $! > pidstat.pid 
+        "''', )
     # list of shutdown commands
-    _shutdown = ()
+    _shutdown = ('''bash -c "
+        kill `cat pidstat.pid`
+        rm pidstat.pid
+        "''', )
 
 def load_services():
     ServiceManager.add(PidstatService)
