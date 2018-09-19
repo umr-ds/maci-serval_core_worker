@@ -34,6 +34,7 @@ COPY --from=builder /serval-dna/servald  /usr/local/sbin/servald
 ### Install pyserval for python 2 and 3
 RUN apt-get update \
     && apt-get install -y \
+    bwm-ng \
     python-pip \
     python3-pip \
     && apt-get clean
@@ -42,6 +43,13 @@ RUN python -m pip install https://github.com/umr-ds/pyserval/archive/7016ef14ef1
     && python -m pip install pynacl \
     && python3 -m pip install pynacl \
     && rm -rf /root/.cache/pip/*
+
+RUN apt-get update \
+    && apt-get install -y \
+    bwm-ng \
+    sysstat \
+    tcpdump \
+    && apt-get clean
 
 ### install core-serval integration
 COPY dotcore /root/.core/

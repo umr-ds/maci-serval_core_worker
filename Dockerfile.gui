@@ -43,6 +43,13 @@ RUN python -m pip install https://github.com/umr-ds/pyserval/archive/7016ef14ef1
     && python3 -m pip install pynacl \
     && rm -rf /root/.cache/pip/*
 
+RUN apt-get update \
+    && apt-get install -y \
+    bwm-ng \
+    sysstat \
+    tcpdump \
+    && apt-get clean
+
 ### install core-serval integration
 COPY dotcore /root/.core/
 ENV BASH_ENV /root/.serval
