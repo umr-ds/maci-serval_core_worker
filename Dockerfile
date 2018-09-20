@@ -38,8 +38,8 @@ RUN apt-get update \
     python-pip \
     python3-pip \
     && apt-get clean
-RUN python -m pip install https://github.com/umr-ds/pyserval/archive/7016ef14ef106cdf6fd1b18866edcde775cb4fcb.zip \
-    && python3 -m pip install https://github.com/umr-ds/pyserval/archive/7016ef14ef106cdf6fd1b18866edcde775cb4fcb.zip \
+RUN python -m pip install https://github.com/umr-ds/pyserval/archive/8049350585e8c1939e9f774dd03598d199f6baca.zip \
+    && python3 -m pip install https://github.com/umr-ds/pyserval/archive/8049350585e8c1939e9f774dd03598d199f6baca.zip \
     && python -m pip install pynacl \
     && python3 -m pip install pynacl \
     && rm -rf /root/.cache/pip/*
