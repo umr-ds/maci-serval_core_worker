@@ -17,11 +17,11 @@ RUN apt-get update \
     gcc-5 \
     && apt-get clean
 
-RUN git clone https://github.com/servalproject/serval-dna.git /serval-dna
+RUN git clone https://github.com/umr-ds/serval-dna.git /serval-dna
 WORKDIR /serval-dna
 ENV CFLAGS -Wno-error=deprecated-declarations -O1
 ENV CC gcc-5
-RUN git checkout batphone-release-0.93
+RUN git fetch && git checkout -b build 66c2853690b7448a96134aded392978db5b1eeef
 RUN autoreconf -f -i -I m4
 RUN ./configure
 RUN make -j 8 servald
@@ -37,8 +37,8 @@ RUN apt-get update \
     python-pip \
     python3-pip \
     && apt-get clean
-RUN python -m pip install https://github.com/umr-ds/pyserval/archive/8049350585e8c1939e9f774dd03598d199f6baca.zip \
-    && python3 -m pip install https://github.com/umr-ds/pyserval/archive/8049350585e8c1939e9f774dd03598d199f6baca.zip \
+RUN python -m pip install https://github.com/umr-ds/pyserval/archive/91619f80d603f3576df3bdb709416d3df40ef17f.zip \
+    && python3 -m pip install https://github.com/umr-ds/pyserval/archive/91619f80d603f3576df3bdb709416d3df40ef17f.zip \
     && python -m pip install pynacl \
     && python3 -m pip install pynacl \
     && rm -rf /root/.cache/pip/*
