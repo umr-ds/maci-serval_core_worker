@@ -1,8 +1,3 @@
-''' serval-dna DTN service
-'''
-
-import os
-
 from core.service import CoreService
 from core.service import ServiceManager
 
@@ -66,7 +61,7 @@ class ServalService(CoreService):
     # list of startup commands, also may be generated during startup
     _startup = ('bash -c "servald keyring load keyring.dump; nohup servald start foreground > serval_run.log 2>&1 &"', )
     # list of shutdown commands
-    _shutdown = ('servald stop', )
+    _shutdown = ('bash -c "servald stop"', )
 
     @classmethod
     def generateconfig(cls, node, filename, services):
