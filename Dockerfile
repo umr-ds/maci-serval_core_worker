@@ -31,7 +31,7 @@ RUN make -j 8 servald
 FROM maciresearch/core_worker:0.3
 LABEL maintainer="hoechst@mathematik.uni-marburg.de"
 LABEL name="umrds/serval_core_worker"
-LABEL version="0.3"
+LABEL version="0.3.1"
 
 COPY --from=builder /serval-dna/servald  /usr/local/sbin/servald
 
