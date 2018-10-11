@@ -9,13 +9,14 @@ Although this container is intended to be used with MACI, it works as a standalo
 3. Add the remote docker host to the `xhost` access control list (`xhost +<DOCKER_HOST_IP>`) OR disable the access control list (`xhost +`).
 
 The container can be started adding your IP to the DISPLAY variable: 
+
 ```
-docker run --rm --privileged -v /lib/modules:/lib/modules -it --cap-add=NET_ADMIN -e DISPLAY=<IP>:0 umrds/serval_core_worker-gui
+docker run --rm --privileged -v /lib/modules:/lib/modules -it --cap-add=NET_ADMIN -e DISPLAY=<IP>:0 umrds/serval_core_worker
 ```
 
 ##### Hint: Docker for Mac users can use the special hostname `docker.for.mac.localhost`:
 ```
-docker run --rm --privileged -v /lib/modules:/lib/modules -it --cap-add=NET_ADMIN -e DISPLAY=docker.for.mac.localhost:0 umrds/serval_core_worker-gui
+docker run --rm --privileged -v /lib/modules:/lib/modules -it --cap-add=NET_ADMIN -e DISPLAY=docker.for.mac.localhost:0 umrds/serval_core_worker
 ```
 
 
@@ -43,16 +44,12 @@ A mobile phone node is added to `dotcore/nodes.conf`, which has serval started b
 
 ## MACI: Headless and GUI worker
 
-This worker is available with a gui (based on `maciresearch/core_worker-gui`) to be used during experiment development as well as a headless version (based on `maciresearch/core_worker`) for lightweight experiment runs. 
+This worker is available with a gui (based on `maciresearch/core_worker`) to be used during experiment development as well as headless for lightweight experiment runs. 
 
-### Build images
 ```
+# Build image
 docker build -t umrds/serval_core_worker .
-docker build -t umrds/serval_core_worker-gui -f Dockerfile.gui .
-``` 
 
-### Push images
-```
+# Push image
 docker push umrds/serval_core_worker
-docker push umrds/serval_core_worker-gui
 ```
